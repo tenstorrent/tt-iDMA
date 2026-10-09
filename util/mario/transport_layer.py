@@ -49,8 +49,6 @@ def render_read_mgr_inst(prot_id: str, prot_ids: dict, db: dict) -> dict:
             read_meta_request = 'ar_req_i'
             read_meta_valid = 'ar_valid_i'
             read_meta_ready = 'ar_ready_o'
-            r_chan_valid = 'r_chan_valid_o'
-            r_chan_ready = 'r_chan_ready_o'
             buffer_in = 'buffer_in'
             buffer_in_valid = 'buffer_in_valid'
         else:
@@ -68,8 +66,6 @@ def render_read_mgr_inst(prot_id: str, prot_ids: dict, db: dict) -> dict:
 (ar_req_i.src_protocol == idma_pkg::{db[rp]["protocol_enum"]}) & ar_valid_i\
 '''
             read_meta_ready = f'{rp}_ar_ready'
-            r_chan_valid = f'{rp}_r_chan_valid'
-            r_chan_ready = f'{rp}_r_chan_ready'
             buffer_in = f'{rp}_buffer_in'
             buffer_in_valid = f'{rp}_buffer_in_valid'
 
@@ -87,8 +83,6 @@ def render_read_mgr_inst(prot_id: str, prot_ids: dict, db: dict) -> dict:
             'read_meta_ready': read_meta_ready,
             'read_request': f'{rp}_read_req_{read_port_dir_req_str}',
             'read_response': f'{rp}_read_rsp_{read_port_dir_rsp_str}',
-            'r_chan_valid': r_chan_valid,
-            'r_chan_ready': r_chan_ready,
             'buffer_in': buffer_in,
             'buffer_in_valid': buffer_in_valid
         }
@@ -130,6 +124,9 @@ def render_write_mgr_inst(prot_id: str, prot_ids: dict, db: dict) -> dict:
             write_meta_request = 'aw_req_i'
             write_meta_valid = 'aw_valid_i'
             write_meta_ready = 'aw_ready_o'
+            w_chan_valid = 'w_chan_valid_o'
+            w_chan_ready = 'w_chan_ready_o'
+            w_chan_first = 'w_chan_first_o'
             buffer_out_ready = 'buffer_out_ready'
         else:
             write_dp_valid_in = f'''\
@@ -144,6 +141,9 @@ def render_write_mgr_inst(prot_id: str, prot_ids: dict, db: dict) -> dict:
 (aw_req_i.dst_protocol == idma_pkg::{db[wp]["protocol_enum"]}) & aw_valid_i\
 '''
             write_meta_ready = f'{wp}_aw_ready'
+            w_chan_valid = f'{wp}_w_chan_valid'
+            w_chan_ready = f'{wp}_w_chan_ready'
+            w_chan_first = f'{wp}_w_chan_first'
             buffer_out_ready = f'{wp}_buffer_out_ready'
 
         write_port_context = {
@@ -160,6 +160,9 @@ def render_write_mgr_inst(prot_id: str, prot_ids: dict, db: dict) -> dict:
             'write_meta_ready': write_meta_ready,
             'write_request': f'{wp}_write_req_o',
             'write_response': f'{wp}_write_rsp_i',
+            'w_chan_valid': w_chan_valid,
+            'w_chan_ready': w_chan_ready,
+            'w_chan_first': w_chan_first,
             'buffer_out_ready': buffer_out_ready
         }
 
